@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+# Arguments are:
+#
+# $1 = fasta file
+# $2 = HISAT2 index base
+
+hisat2-build $1 $2

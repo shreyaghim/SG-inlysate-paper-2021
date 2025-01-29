@@ -1,0 +1,38 @@
+
+
+# This script moves a sam file to localscratch and converts into a single 
+# sorted bam file.
+
+module load samtools
+
+HS2dir=$1
+filename=$2
+usrname=(`whoami`)
+
+
+# Clear local scratch of files with same filename
+
+rm -r /localscratch/Users/$usrname/*$filename*
+
+# Copy sam file to localscratch
+
+cp $HS2dir/$filename/*sam /localscratch/Users/$usrname
+
+
+# Change directory to localscratch and merge sam files
+
+cd /localscratch/Users/$usrname
+
+
+# Convert sam to bam and sort and index
+
+samtools view -bS $filename".sam" > $filename".bam"
+samtools sort -o $filename"_sorted.bam" $filename".bam"
+samtools index $filename"_sorted.bam"
+
+# Move sorted bam and index from localscratch back to directory
+
+mv /localscratch/Users/$usrname/$filename"_sorted.bam" $HS2dir/$filename
+mv /localscratch/Users/$usrname/$filename"_sorted.bam.bai" $HS2dir/$filename
+
+

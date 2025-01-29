@@ -1,0 +1,15 @@
+
+#!/bin/bash
+
+# This script will pre-process a raw sequencing file
+
+projdir=$1
+fileprefix=$2
+
+gunzip $fileprefix".fastq.gz"
+
+$projdir/bin/umi_homopolymer.py $fileprefix".fastq" $fileprefix"_trim.fastq"
+
+gzip $fileprefix".fastq"
+gzip $fileprefix"_trim.fastq"
+

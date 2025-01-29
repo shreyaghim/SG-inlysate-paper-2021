@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Arguments are:
+#
+# $1 = project directory
+# $2 = HISAT2 index
+# $3 = sample name
+
+projdir=$1
+ht2index=$2
+sampname=$3
+
+hisat2 -x $ht2index -U $projdir/raw/$sampname/*trim* -S $sampname.sam
+
+mkdir $sampname
+mv $sampname.sam $sampname/$sampname.sam

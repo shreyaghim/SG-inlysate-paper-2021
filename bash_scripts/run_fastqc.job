@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Arguments are:
+#
+# $1 = output directory name
+# $2 = fastq file to run
+
+# This script is called by run_fastqc.sh. 
+
+outputdir=$1
+filename=$2
+
+/Shared/pezzulolab/PRP_FIBS03_S3S_V2/bin/FastQC/fastqc -o $outputdir $filename
+

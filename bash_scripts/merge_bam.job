@@ -1,0 +1,13 @@
+
+#!/bin/bash
+
+module load samtools
+
+# This script merges bam files and indexes the merged file
+
+samdir=$1
+outdir=$2
+
+samtools merge $outdir/merged.bam $samdir/*/*_sorted.bam
+samtools index $outdir/merged.bam
+

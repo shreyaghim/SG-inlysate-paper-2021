@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Arguments are:
+#
+# $1 = project directory
+# $2 = input directory name
+# $3 = output directory name
+# $4 = sample name to run
+
+# This script is called by run_featurecounts.sh. 
+# The refname argument below will need to be changed for other reference transcriptome builds.
+
+projdir=$1
+inputdir=$2
+outputdir=$3
+sampname=$4
+usrname=(`whoami`)
+
+refname=HSapiens_GRCh38.p13_RefSeq.gff
+
+# change directory to localscratch
+
+cd /localscratch/Users/$usrname
+
+# make directory to hold .sam file
+
+mkdir /localscratch/Users/$usrname/$sampname/
+
+#copy .sam file and transcriptome into localscratch
+
+cp $inputdir/$sampname/*.sam /localscratch/Users/$usrname/$sampname/
+
+#IF local_scratch, copy each instance. If nfs_scratch, copy once and erase at end
+cp -r $projdir/raw/ref/$refname /localscratch/Users/$usrname/$sampname/
+
+#execute process
+
+mkdir /localscratch/Users/$usrname/$sampname/featurecounts_$sampname
+
+cd /localscratch/Users/$usrname/$sampname/featurecounts_$sampname
+
+sam_filename=(`ls /localscratch/Users/$usrname/$sampname | grep "sam"`)
+
+featureCounts -a /localscratch/Users/$usrname/$sampname/$refname -F GTF -t exon -g gene_id -s 1 --read2pos 5 -o /localscratch/Users/$usrname/$sampname/featurecounts_$sampname/featurecounts_$sampname.txt /localscratch/Users/$usrname/$sampname/$sam_filename
+
+
+if [ ! -d $outputdir ]; then 
+  mkdir $outputdir; 
+fi
+
+#move results, STDERR, and STDOUT to home results
+mv /localscratch/Users/$usrname/$sampname/featurecounts_$sampname $outputdir/featurecounts_$sampname
+
+#disk usage max
+echo "scratch disk usage max"
+du -sh /localscratch/Users/$usrname/
+
+#remove fastq files and transcriptome from localscratch
+rm -r /localscratch/Users/$usrname/$sampname
+
+#disk usage postmove results
+echo "scratch disk usage postmove"
+du -sh /localscratch/Users/$usrname/
+
+mv $SGE_STDOUT_PATH $outputdir/
+mv $SGE_STDERR_PATH $outputdir/
+
+
