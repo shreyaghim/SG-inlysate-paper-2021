@@ -1,10 +1,12 @@
 # Comparing our novel In-lysate cDNA approach with standard bulk RNA-seq approaches
 
-### Shreya Ghimire
+Shreya Ghimire
 
-### Pezzulo lab, Department of Internal Medicine, UIowa
+Pezzulo lab, Department of Internal Medicine, UIowa
 
-### Jan 20, 2025 (deposited in github), originally written on May 2021 ================
+Jan 20, 2025 (deposited in github), originally written on May 2021
+
+================
 
 # Introduction
 
