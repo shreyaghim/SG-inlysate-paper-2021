@@ -33,7 +33,7 @@ I downloaded the raw sequencing data and organized fastq files into appropriate 
 *NOTE*: The command line scripts are shown only for inlysate approach. The other 2 methods were processed in the similar way except for preprocess_fastq.sh script, which was done only for samples prepared using Smart-3SEQ (inlysate and purified RNA samples).
 
 ``` bash
-wget --wait=1 -r -l3 -nd --no-parent -P /Shared/pezzulolab/inlysate/raw -A .fastq.gz http://dnacore454.healthcare.uiowa.edu/20200131-0045_Pezzulo_2013PdATFKKcNiBUcEIcvOyEWEYzNNSMForDlNbxhxPT/results/
+wget --wait=1 -r -l3 -nd --no-parent -P /Shared/pezzulolab/inlysate/raw -A .fastq.gz [URL]
 ```
 
 I organized fastq files into appropriate directory structure: one sample per directory. For context: for a fastq file named as 01_SF2_DMSO_lane2_20200131000_S25_L002_R1_001.fastq The script below will create folder 01_SF2_DMSO and put the above .fastq file in it.
